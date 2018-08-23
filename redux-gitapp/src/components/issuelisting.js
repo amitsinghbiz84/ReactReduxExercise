@@ -13,46 +13,39 @@ export default class IssueListing extends Component {
     fetch(url)
       .then(response => {
         return response.json();
-      }).then(d => {
-          let clouds = d.map((cloudData)=>{
-            return(
-              <div>{cloudData}</div>
-            )
-        })
-        this.setState({clouds: clouds});
-          console.log("state", this.state.clouds)
+      }).then(data => {
+        this.setState({clouds: data});
+        
+         // console.log("state", this.state.clouds)
     })
   };
 
   render() {
     return (
       <div className="mt-5">
-      
+
         <ul className="nav nav-tabs">
-          <li classNameass="active"><a href="#">Issues (2)</a></li>
+          <li classNameass="active"><a href="#">Issues ({this.state.clouds.length})</a></li>
         </ul>
-        <table className="table table-hover border mt-5">
-            <tbody>
-              <tr>
-                  <td>
-                  
-                    <h2><span className="glyphicon glyphicon-info-sign pr-3 text-success"></span>Create Rect App</h2>
-                    <p>
-                      #4880 opned an hour ago by Rob
-                    </p>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                    
-                    <h2><span className="glyphicon glyphicon-info-sign pr-3 text-success"></span>Create Rect App</h2>
-                    <p>
-                      #4880 opned an hour ago by Rob
-                    </p>
-                  </td>
-              </tr>
-            </tbody>
-          </table>
+
+        {
+          this.state.clouds.map((items =>                        
+                <table className="table table-hover border mt-5" key={items.id}>
+                    <tbody>
+                      <tr>
+                          <td>                          
+                            <h2><span className="glyphicon glyphicon-info-sign pr-3 text-success"></span>{items.title}</h2>
+                            <p>
+                              {items.number} {items.state} an hour {items.created_at} by {items.user.login}
+                            </p>
+                          </td>
+                      </tr>                      
+                    </tbody>
+                </table>
+                       
+            ))
+          }       
+        
         </div>
     )
   }
