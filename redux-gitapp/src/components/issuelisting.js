@@ -36,7 +36,7 @@ export default class IssueListing extends Component {
                           <td>                          
                             <h2><span className="glyphicon glyphicon-info-sign pr-3 text-success"></span>{items.title}</h2>
                             <p>
-                              {items.number} {items.state} an hour {items.created_at} by {items.user.login}
+                              #{items.number} {items.state} an hour {items.created_at} by {items.user.login}
                             </p>
                           </td>
                       </tr>                      
