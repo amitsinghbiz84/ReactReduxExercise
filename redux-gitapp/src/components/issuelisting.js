@@ -60,7 +60,7 @@ export default class IssueListing extends Component {
                 this.state.clouds.map((items =>
                   <tr key={items.id}>
                       <td>                          
-                        <h4><span className="glyphicon glyphicon-exclamation-sign pr-3 text-success"></span>{items.title}</h4>
+                        <h4><a href={items.html_url}><span className="glyphicon glyphicon-exclamation-sign pr-3 text-success"></span>{items.title}</a></h4>
                         <p>
                           #{items.number} {items.state} an hour {items.created_at} by {items.user.login}
                         </p>
