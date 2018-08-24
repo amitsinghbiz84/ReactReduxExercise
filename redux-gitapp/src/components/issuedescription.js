@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
 
 const IssueDescription = () => {
   return (
     <div>
-      <h1>  Issue Description </h1>
+      <div className="container">
+        <h1>  Issue Description Detail page Work in progress ... </h1>
+      </div>
+      
     </div>
   )
 }
