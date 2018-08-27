@@ -17,7 +17,7 @@ export default class Sorting extends Component {
       <div>
 
         <div className="float-right mt-5 pb-5">
-          <select class="custom-select" onChange={this.handleSortChange} defaultValue={this.props.sortBy}>
+          <select className="custom-select" onChange={this.handleSortChange} defaultValue={this.props.sortBy}>
             <option>Sort By</option>
             <option value="created_at|desc">Newest</option>
             <option value="created_at|asc">Oldest</option>

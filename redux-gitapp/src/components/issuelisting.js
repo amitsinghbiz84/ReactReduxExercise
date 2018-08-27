@@ -57,7 +57,7 @@ export default class IssueListing extends Component {
 
         <form className="row mt-5">
         <div className="col-sm-6">
-            <label className="sr-only" for="inlineFormInputGroup">Username</label>
+            <label className="sr-only" htmlFor="inlineFormInputGroup">Username</label>
             <div className="input-group mb-2">
                 <div className="input-group-prepend">
                     <div className="input-group-text">Filter </div>

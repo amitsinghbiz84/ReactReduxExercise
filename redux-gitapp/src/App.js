@@ -7,7 +7,7 @@ import IssueListing from './components/issuelisting';
 class App extends Component {
   render() {
     return (
-      <div class="container">
+      <div className="container">
 
         <IssueListing/>
         
