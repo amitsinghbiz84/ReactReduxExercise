@@ -9,7 +9,7 @@ export default class IssueListing extends Component {
   };
 
   componentDidMount() {
-    var url="https://api.github.com/repos/vmg/redcarpet/issues?state=open";
+    let url="https://api.github.com/repos/vmg/redcarpet/issues?state=open";
     fetch(url)
       .then(response => {
         return response.json();
