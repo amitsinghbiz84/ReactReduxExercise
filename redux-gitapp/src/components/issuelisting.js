@@ -1,37 +1,57 @@
 import React, { Component } from 'react';
+import Sorting from './sorting'
 
 export default class IssueListing extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      clouds:[]
-    }
-  };
+      issueJson:[],
+      sortSelection: 'created_at|desc',
+      searchKeyword: ''
+    };
+    this.handleSearchTerm = this.handleSearchTerm.bind(this);
+    this.handleSortChange = this.handleSortChange.bind(this);
+  }
 
   componentDidMount() {
-    let url="https://api.github.com/repos/vmg/redcarpet/issues?state=open";
+    const url="https://api.github.com/repos/vmg/redcarpet/issues?state=open";
     fetch(url)
       .then(response => {
         return response.json();
       }).then(data => {
-        this.setState({clouds: data});
+        this.setState({issueJson: data});
         
-         // console.log("state", this.state.clouds)
+         // console.log("state", this.state.issueJson)
     })    
-  };
+  }
 
-  filterList(e) {
-    let updatedList = this.state.clouds;
-    let searcheyword = e.target.value;
-    updatedList = updatedList.filter(function(item){
-      return item.title.toLowerCase().search(searcheyword) !== -1;
+
+  handleSearchTerm (event) {
+    this.setState({
+      searchKeyword:  event.target.value
     });
-    this.setState({clouds: updatedList});
-  };
+  }
+
+  handleSortChange (sortSelectionValue) {
+    this.setState({
+      sortSelection: sortSelectionValue
+    });
+  }
 
   
 
   render() {
+
+      let updatedList = this.state.issueJson;
+      const sortKey = this.state.sortSelection.split('|')[0];
+      const sortOrder = this.state.sortSelection.split('|')[1];
+      // const newJSON = updatedList.filter(item => 
+      //   (item.title.toLowerCase().search(this.state.searchKeyword.toLowerCase()) !== -1));
+      //   console.log(newJSON);
+      updatedList = sortKey === 'comments' ? (updatedList.filter(item =>
+        (item.title.toLowerCase().search(this.state.searchKeyword.toLowerCase()) !== -1)).sort((a,b) => (a[sortKey] > b[sortKey] ? (sortOrder === 'asc' ? 1:-1): (sortOrder === 'asc' ? -1: 1)))) : (updatedList.filter(item =>
+          (item.title.toLowerCase().search(this.state.searchKeyword.toLowerCase()) !== -1)).sort((a,b) => (new Date(a[sortKey]).getTime() > new Date(b[sortKey]).getTime() ? (sortOrder === 'asc' ? 1:-1): (sortOrder === 'asc' ? -1: 1))));
+
     return (
       <div className="mt-5">
 
@@ -45,19 +65,21 @@ export default class IssueListing extends Component {
                 <div className="input-group-prepend">
                     <div className="input-group-text"><i className="glyphicon glyphicon-search"></i></div>
                 </div>                
-                <input type="text" className="form-control" id="inlineFormInputGroup" placeholder="is:issue is:open" onChange={this.filterList.bind(this)}></input>         
+                <input type="text" className="form-control" id="inlineFormInputGroup" placeholder="is:issue is:open" onChange={this.handleSearchTerm}></input>         
             </div>
             </div>
         </form>        
 
         <ul className="nav nav-tabs mt-5">
-          <li classNameass="active"><h2>< a href="#">Issues ({this.state.clouds.length})</a></h2></li>
+          <li className="active"><h2>< a href="#">Issues ({updatedList.length})</a></h2></li>
         </ul>
+
+        <Sorting onSortChange={this.handleSortChange} sortBy={this.state.sortSelection} />
 
         <table className="table table-hover border mt-5">
             <tbody>
               {
-                this.state.clouds.map((items =>
+                updatedList.map((items =>
                   <tr key={items.id}>
                       <td>                          
                         <h4><a href="detail"><span className="glyphicon glyphicon-exclamation-sign pr-3 text-success"></span>{items.title}</a></h4>
