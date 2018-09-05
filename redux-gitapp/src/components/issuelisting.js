@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
-import Sorting from './sorting'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import Sorting from './sorting';
+import {updateResponse} from '../actions/postactions';
+
+const mapStateToProps = state => (
+  {
+    issues: state.issues
+  })
+
+  const mapDispatchToProps = dispatch => (
+    bindActionCreators(updateResponse, dispatch)
+  )
 
 export default class IssueListing extends Component {
   constructor(props) {
@@ -19,11 +31,12 @@ export default class IssueListing extends Component {
       .then(response => {
         return response.json();
       }).then(data => {
+        //this.props.updateResponse(data);
         this.setState({issueJson: data});
         
          // console.log("state", this.state.issueJson)
     })    
-  }
+  } 
 
 
   handleSearchTerm (event) {
@@ -82,7 +95,7 @@ export default class IssueListing extends Component {
                 updatedList.map((items =>
                   <tr key={items.id}>
                       <td>                          
-                        <h4><a href="detail"><span className="glyphicon glyphicon-exclamation-sign pr-3 text-success"></span>{items.title}</a></h4>
+                        <h4><a href={'/detail/'+items.number}><span className="glyphicon glyphicon-exclamation-sign pr-3 text-success"></span>{items.title}</a></h4>
                         <p>
                           #{items.number} {items.state} an hour {items.created_at} by {items.user.login}
                         </p>
@@ -98,4 +111,6 @@ export default class IssueListing extends Component {
     )
   }
 }
+
+IssueListing = connect(mapStateToProps, mapDispatchToProps)(IssueListing);
 

@@ -10,7 +10,7 @@ const Router = () => (
         <BrowserRouter>
             <Switch>
             <Route exact path='/' component={IssueListing}/>
-            <Route path='/detail/' component={IssueDescription}/>
+            <Route path='/detail/:issueIdentifier' component={IssueDescription}/>
             
             </Switch>
             
