@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Sorting from './sorting';
-import {updateResponse} from '../actions/postactions';
+import * as actionMethods from '../actions/postactions';
 
 const mapStateToProps = state => (
   {
@@ -10,10 +11,10 @@ const mapStateToProps = state => (
   })
 
   const mapDispatchToProps = dispatch => (
-    bindActionCreators(updateResponse, dispatch)
+    bindActionCreators(actionMethods, dispatch)
   )
 
-export default class IssueListing extends Component {
+class IssueListing extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,12 +27,16 @@ export default class IssueListing extends Component {
   }
 
   componentDidMount() {
+    console.log(this.state);
+    console.log(this.props);
     const url="https://api.github.com/repos/vmg/redcarpet/issues?state=open";
     fetch(url)
       .then(response => {
         return response.json();
       }).then(data => {
-        //this.props.updateResponse(data);
+        this.props.updateResponse(data);
+        console.log(this.state);
+        console.log(this.props);
         this.setState({issueJson: data});
         
          // console.log("state", this.state.issueJson)
@@ -95,7 +100,11 @@ export default class IssueListing extends Component {
                 updatedList.map((items =>
                   <tr key={items.id}>
                       <td>                          
-                        <h4><a href={'/detail/'+items.number}><span className="glyphicon glyphicon-exclamation-sign pr-3 text-success"></span>{items.title}</a></h4>
+                        <h4>
+                          <Link to={'/detail/'+items.number}>
+                            <span className="glyphicon glyphicon-exclamation-sign pr-3 text-success"></span>{items.title}
+                          </Link>
+                        </h4>
                         <p>
                           #{items.number} {items.state} an hour {items.created_at} by {items.user.login}
                         </p>
@@ -114,3 +123,4 @@ export default class IssueListing extends Component {
 
 IssueListing = connect(mapStateToProps, mapDispatchToProps)(IssueListing);
 
+export default IssueListing;
