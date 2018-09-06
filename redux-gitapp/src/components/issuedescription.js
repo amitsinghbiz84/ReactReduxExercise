@@ -25,11 +25,23 @@ let IssueDescription = (props) => {
     return <div className="container pt-5"><h1>Sorry, the list is empty.</h1></div>
   }
   
+  let submitComment = () => {
+    const getComment = document.getElementById('commentTextarea').value;
+    let showContent = document.getElementById('showComment'); 
+    if (getComment == "") {
+        alert("Please enter a comment in first!");
+        return false;
+    }    
+    localStorage.setItem('comment', getComment);
+    let updatedComment = localStorage.getItem('comment');
+    showContent.innerHTML = updatedComment;
+  }
+  
 
   console.log(filteredData); 
    
   return(
-    <div class="container">
+    <div className="container">
       <h1>native #{filteredData.number}</h1>
       <div className="issueDetail">
         <span className="btn-success rounded mr-3 p-3 glyphicon glyphicon-exclamation-sign"> {filteredData.state}</span>
@@ -37,13 +49,16 @@ let IssueDescription = (props) => {
         <hr/>
         <div className="row mb-5">
           <div className="col-sm-2"><img src={filteredData.user.avatar_url}/></div>
-          <div className="col-sm-10">{filteredData.body}</div>
+          <div className="col-sm-10">{filteredData.body}</div>          
+        </div>
+        <div id="showComment" className="pb-5 pt-5">
+
         </div>
         <div className="commentSection">
           <div className="form-group">
-            <label for="exampleTextarea">Write Comment</label>
-            <textarea className="form-control mb-3" id="exampleTextarea" rows="3"></textarea>
-            <button type="submit" className="btn btn-success">Comment</button>
+            <label htmlFor="exampleTextarea">Write Comment</label>
+            <textarea className="form-control mb-3" id="commentTextarea" rows="3"></textarea>
+            <button type="submit" className="btn btn-success" onClick={submitComment}>Comment</button>
           </div>
         </div>
       </div>
