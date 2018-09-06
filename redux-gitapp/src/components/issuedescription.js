@@ -29,7 +29,7 @@ let IssueDescription = (props) => {
     <div class="container">
       <h1>native #{filteredData.number}</h1>
       <div className="issueDetail">
-        <span className="btn-success mr-3 p-3 glyphicon glyphicon-exclamation-sign"> {filteredData.state}</span>
+        <span className="btn-success rounded mr-3 p-3 glyphicon glyphicon-exclamation-sign"> {filteredData.state}</span>
         <span>{filteredData.user.login} opened this issue on {filteredData.created_at} </span>
         <hr/>
         <div className="row">
