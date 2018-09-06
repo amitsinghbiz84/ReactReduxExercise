@@ -21,6 +21,9 @@ let IssueDescription = (props) => {
       return item.number == currentIssueID;
     })
   }
+  else {
+    return <div className="container pt-5"><h1>Sorry, the list is empty.</h1></div>
+  }
   
 
   console.log(filteredData); 
@@ -35,6 +38,9 @@ let IssueDescription = (props) => {
         <div className="row">
           <div className="col-sm-2"><img src={filteredData.user.avatar_url}/></div>
           <div className="col-sm-10">{filteredData.body}</div>
+        </div>
+        <div className="commentSection">
+
         </div>
       </div>
       
