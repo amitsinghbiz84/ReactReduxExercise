@@ -35,12 +35,16 @@ let IssueDescription = (props) => {
         <span className="btn-success rounded mr-3 p-3 glyphicon glyphicon-exclamation-sign"> {filteredData.state}</span>
         <span>{filteredData.user.login} opened this issue on {filteredData.created_at} </span>
         <hr/>
-        <div className="row">
+        <div className="row mb-5">
           <div className="col-sm-2"><img src={filteredData.user.avatar_url}/></div>
           <div className="col-sm-10">{filteredData.body}</div>
         </div>
         <div className="commentSection">
-
+          <div className="form-group">
+            <label for="exampleTextarea">Write Comment</label>
+            <textarea className="form-control mb-3" id="exampleTextarea" rows="3"></textarea>
+            <button type="submit" className="btn btn-success">Comment</button>
+          </div>
         </div>
       </div>
       
